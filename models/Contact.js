@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const ContactSchema = mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "users"
+    ref: "User"
   },
   name: {
     type: String,
@@ -26,4 +26,4 @@ const ContactSchema = mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model("contact", ContactSchema);
+module.exports = mongoose.model("Contact", ContactSchema);
