@@ -8,7 +8,7 @@ const Contacts = () => {
   return (
     <Fragment>
       {contacts.map(contact => (
-        <h3>{contact.name}</h3>
+        <h3 key={contact.id}>{contact.name}</h3>
       ))}
     </Fragment>
   );
