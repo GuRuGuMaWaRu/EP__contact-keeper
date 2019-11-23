@@ -74,8 +74,16 @@ router.put("/:id", (req, res) => {
 // @route     DELETE api/contacts/:id
 // @desc      Delete contact
 // @access    Private
-router.delete("/:id", (req, res) => {
-  res.send("Delete contact");
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await Contact.deleteOne({ _id: id });
+    res.status(200).json({ msg: "Contact deleted." });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ msg: "Server error" });
+  }
 });
 
 module.exports = router;
