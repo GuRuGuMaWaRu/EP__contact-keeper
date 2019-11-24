@@ -67,9 +67,42 @@ router.post(
 // @route     PUT api/contacts/:id
 // @desc      Update contact
 // @access    Private
-router.put("/:id", (req, res) => {
-  res.send("Update contact");
-});
+router.put(
+  "/:id",
+  [
+    auth,
+    [
+      check("name", "Name is required")
+        .not()
+        .isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array()
+      });
+    }
+
+    const { name, email, phone, type } = req.body;
+
+    const { id } = req.params;
+
+    try {
+      const data = await Contact.findByIdAndUpdate(
+        id,
+        { name, email, phone, type },
+        { new: true }
+      );
+      res.json(data);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ msg: "Server error" });
+    }
+  }
+);
 
 // @route     DELETE api/contacts/:id
 // @desc      Delete contact
