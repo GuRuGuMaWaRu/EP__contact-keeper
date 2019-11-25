@@ -17,7 +17,7 @@ router.get("/", auth, async (req, res) => {
     res.json(user);
   } catch (err) {
     console.error(err.message);
-    res.status(500).json({ msg: "Server error" });
+    res.status(500).send("Server Error");
   }
 });
 
@@ -64,7 +64,7 @@ router.post(
         payload,
         config.get("jwtSecret"),
         {
-          expiresIn: 3600
+          expiresIn: 36000
         },
         (err, token) => {
           if (err) throw err;
@@ -73,7 +73,7 @@ router.post(
       );
     } catch (err) {
       console.error(err.message);
-      res.status(500).json({ error: err });
+      res.status(500).send("Server Error");
     }
   }
 );
